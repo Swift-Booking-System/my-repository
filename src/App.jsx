@@ -34,7 +34,7 @@ export default function App() {
                 </header>
 
 
-
+                {/* main layout*/}
                 <main className="flex min-h-screen items-center bg-gray-700 flex-col">
                     <div
                         className="my-3 max-w-7xl w-full h-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-4">
