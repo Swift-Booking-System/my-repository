@@ -79,7 +79,21 @@ export default function Service() {
   const {state} = useLocation()
   const [booking, setBooking] = useState(null);
   const [error, setError] = useState(null);
+  const [timeslots, setTimeslots] = useState([]);
 
+  useEffect(() => {
+    if (state) {
+      setBooking(state.service);
+    }
+    function getTimeslots() {
+      fetch("https://localhost:7023/api/timeslots/available?serviceId="+ state.service.serviceId)
+        .then((response) => response.json())
+        .then((data) => {
+          setTimeslots(data);
+        });
+    }
+    getTimeslots()
+  }, [state]);
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4 m-2">
@@ -88,7 +102,7 @@ export default function Service() {
       <p className="text-gray-600">
         Duration: {state.service.duration} minutes, Price: ${state.service.price}
       </p>
-
+        <TimeSlots timeslots={timeslots} />
       {error && <p className="text-red-600">{error}</p>}
     </div>
   );
