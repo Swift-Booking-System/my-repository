@@ -30,7 +30,7 @@ export function Services() {
     function ServiceList({ services }) {
         return (
             <div>
-                <h1>Services</h1>
+                <h1 className="text-xl text-white font-bold">Services</h1>
                 <ul>
                     {services.map((service) => (
                         <div key={service.serviceId} className="bg-white rounded-lg shadow-md p-4 m-2">
@@ -39,8 +39,8 @@ export function Services() {
                             <p className="text-gray-600">Duration: {service.duration} minutes</p>
                             <p className="text-gray-600">Price: ${service.price}</p>
                             <p className="text-gray-600">Status: {service.status}</p>
-                            <Link  to={`/services/${service.serviceId}`} state={{ service }}>
-                                <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            <Link to={`/services/${service.serviceId}`} state={{ service }}>
+                                <button className="px-4 py-2 my-3 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                                     Book
                                 </button>
                             </Link>
