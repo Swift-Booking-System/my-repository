@@ -30,7 +30,7 @@ export function Services() {
     function ServiceList({ services }) {
         return (
             <div>
-                <h1 className="text-xl text-white font-bold">Services</h1>
+                <h1 className="mx-3 text-3xl text-white font-bold">Services</h1>
                 <ul>
                     {services.map((service) => (
                         <div key={service.serviceId} className="bg-white rounded-lg shadow-md p-4 m-2">

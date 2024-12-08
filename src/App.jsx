@@ -9,7 +9,7 @@ export default function App() {
     return (
         <>
             <Router>
-                <header className="w-screen  bg-gray-900 text-white shadow-md z-50">
+                <header className="w-screen bg-gray-900 text-white shadow-md z-50">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
                         <div className="text-lg font-bold">Swift Booking System</div>
                         <nav className="flex space-x-4">
@@ -37,7 +37,7 @@ export default function App() {
                 {/* main layout*/}
                 <main className="flex min-h-screen items-center bg-gray-700 flex-col">
                     <div
-                        className="my-3 max-w-7xl w-full h-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-4">
+                        className="my-3 max-w-7xl w-full h-screen">
                         <Routes>
                             <Route path="/about" element={<About />} />
                             <Route path="/services"  >
