@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /**
  * @typedef {Object} Timeslot
@@ -18,6 +18,8 @@ import { useLocation } from "react-router-dom";
  * @returns {JSX.Element} The rendered component.
  */
 function TimeSlots({ timeslots }) {
+  const navigate = useNavigate();
+
   async function makeBooking(userId, providerId, serviceId, timeSlotId) {
     try {
       const response = await fetch("/api/bookings", {
@@ -37,33 +39,50 @@ function TimeSlots({ timeslots }) {
         throw new Error("Booking failed");
       }
 
-      return await response.json();
+      const bookingResponse = await response.json();
+      alert("Booking successful!");
+      navigate("/bookings"); // Redirect to bookings page after successful booking
     } catch (error) {
       console.error("Error making booking:", error);
-      throw error;
+      alert("Failed to make booking. Please try again.");
     }
   }
 
   return (
     <div>
-  <h1 className="mt-5 mb-2 text-xl font-bold">Timeslots</h1>
-  <ul>
-    {timeslots.map((timeslot) => (
-      <li
-        className="bg-white rounded-lg shadow-md p-4 m-2 flex justify-between items-center"
-        key={timeslot.timeslotId}
-      >
-        <span>
-          {timeslot.startTime} - {timeslot.endTime}
-        </span>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-          Book
-        </button>
-      </li>
-    ))}
-  </ul>
-</div>
-
+      <h1 className="mt-5 mb-2 text-xl font-bold">Timeslots</h1>
+      <ul>
+        {timeslots.map((timeslot) => (
+          <li
+            className="bg-white rounded-lg shadow-md p-4 m-2 flex justify-between items-center"
+            key={timeslot.timeslotId}
+          >
+            <span>
+              {new Date(timeslot.startTime).toLocaleString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })}
+            </span>
+            <Link
+              to={`/services/${serviceId}/booking`}
+              state={{
+                booking: {
+                  timeslotId: timeslot.timeslotId,
+                  // other relevant booking details
+                },
+              }}
+            >
+              <button>Book</button>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -110,7 +129,7 @@ export default function Service() {
         Duration: {state.service.duration} minutes, Price: $
         {state.service.price}
       </p>
-      <TimeSlots timeslots={timeslots} />
+      <TimeSlots timeslots={timeslots} serviceId={state.service.serviceId} />
       {error && <p className="text-red-600">{error}</p>}
     </div>
   );
